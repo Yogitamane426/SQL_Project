@@ -1,0 +1,11 @@
+company_id,company_name,industry,valuation,founded_year,unicorn_year,country,number_of_employees
+1,Company A,Fintech,2.5,2010,2015,USA,500
+2,Company B,Healthtech,1.8,2012,2017,India,200
+3,Company C,E-commerce,3,2008,2016,USA,800
+4,Company D,Fintech,1.2,2011,2018,UK,150
+5,Company E,Edtech,1.5,2013,2020,Canada,300
+6,Company F,E-commerce,2.8,2009,2017,Germany,600
+7,Company G,Healthtech,2,2011,2016,China,400
+8,Company H,Fintech,1.3,2014,2021,India,250
+9,Company I,E-commerce,4.5,2007,2015,Japan,700
+10,Company J,Edtech,1,2015,2022,Australia,150

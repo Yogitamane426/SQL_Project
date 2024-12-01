@@ -1,0 +1,83 @@
+CREATE TABLE unicorn_companies(
+	company_id	SERIAL,
+	company_name VARCHAR,
+	industry	VARCHAR,
+	valuation	DECIMAL,
+	founded_year INTEGER,
+	unicorn_year INTEGER,
+	country	VARCHAR,
+	number_of_employees	INTEGER
+)
+
+INSERT INTO unicorn_companies (company_name, industry, valuation, founded_year, unicorn_year, country, number_of_employees)
+VALUES
+('Company A', 'Fintech', 2.5, 2010, 2015, 'USA', 500),
+('Company B', 'Healthtech', 1.8, 2012, 2017, 'India', 200),
+('Company C', 'E-commerce', 3.0, 2008, 2016, 'USA', 800),
+('Company D', 'Fintech', 1.2, 2011, 2018, 'UK', 150),
+('Company E', 'Edtech', 1.5, 2013, 2020, 'Canada', 300),
+('Company F', 'E-commerce', 2.8, 2009, 2017, 'Germany', 600),
+('Company G', 'Healthtech', 2.0, 2011, 2016, 'China', 400),
+('Company H', 'Fintech', 1.3, 2014, 2021, 'India', 250),
+('Company I', 'E-commerce', 4.5, 2007, 2015, 'Japan', 700),
+('Company J', 'Edtech', 1.0, 2015, 2022, 'Australia', 150);
+
+SELECT * FROM unicorn_companies
+
+---- 1. Which industries had the most unicorns with valuations over $1 billion in a given time period (e.g., 2015–2022)?
+SELECT industry, COUNT(*) AS number_of_unicorns
+FROM unicorn_companies
+WHERE valuation > 1.0 AND unicorn_year BETWEEN 2015 AND 2022
+GROUP BY industry
+ORDER BY number_of_unicorns DESC
+LIMIT 3;
+
+---- 2. How many unicorn companies emerged in each of the top three industries by year?
+SELECT industry, unicorn_year, COUNT(*) AS number_of_unicorns
+FROM unicorn_companies
+WHERE valuation > 1.0 AND industry IN ('Fintech', 'E-commerce', 'Healthtech')
+GROUP BY industry, unicorn_year
+ORDER BY industry, unicorn_year;
+
+---- 3. What is the average valuation of unicorn companies in each of the top three industries during the given period?
+SELECT industry, ROUND(AVG(valuation), 2) AS avg_valuation
+FROM unicorn_companies
+WHERE valuation > 1.0 AND industry IN ('Fintech', 'E-commerce', 'Healthtech') AND unicorn_year BETWEEN 2015 AND 2022
+GROUP BY industry
+ORDER BY avg_valuation DESC;
+
+---- 4. What are the details (name, year, valuation) of unicorn companies from the top three industries?
+SELECT company_name, industry, unicorn_year, valuation
+FROM unicorn_companies
+WHERE valuation > 1.0 AND industry IN ('Fintech', 'E-commerce', 'Healthtech')
+ORDER BY industry, unicorn_year;
+
+---- 5. What is the total valuation of unicorn companies in the top three industries during the given period?
+SELECT industry, ROUND(SUM(valuation), 2) AS total_valuation
+FROM unicorn_companies
+WHERE valuation > 1.0 AND industry IN ('Fintech', 'E-commerce', 'Healthtech') AND unicorn_year BETWEEN 2015 AND 2022
+GROUP BY industry
+ORDER BY total_valuation DESC;
+
+---- 6. How many unicorns emerged in each industry, grouped by whether their valuation is above or below 2 billion dollars?
+SELECT 
+    industry,
+    CASE 
+        WHEN valuation > 2.0 THEN 'Above 2 Billion'
+        ELSE 'Below 2 Billion'
+    END AS valuation_group,
+    COUNT(*) AS number_of_unicorns
+FROM unicorn_companies
+WHERE valuation > 1.0
+GROUP BY industry, valuation_group
+ORDER BY industry, valuation_group;
+
+
+
+
+
+
+
+
+
+
